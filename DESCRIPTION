@@ -5,10 +5,11 @@ Version: 0.1
 Date: 2016-02-17
 Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
 Description: More about what it does (maybe more than one line)
+Depends:
+    R (>= 3.2.1),
+    caret,
+    ggplot2,
+    reshape2
 License: What license is it under?
 LazyData: TRUE
 RoxygenNote: 5.0.1
-NeedsCompilation: no
-Packaged: 2016-02-17 18:08:59 UTC; brandonginoza
-Author: First Last [aut, cre]
-Maintainer: First Last <first.last@example.com>
