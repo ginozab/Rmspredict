@@ -14,7 +14,7 @@ cpred_by_program(method = "C5.0", pred = "bpmail", data = totalCDCatEvo)
 \item{data}{All programs with MS}
 }
 \description{
-User prediction when splitting the data frame to
+Categorical prediction when splitting the data frame to
 predict for one program and train on all the rest
 }
 
