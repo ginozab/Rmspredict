@@ -81,7 +81,7 @@ npred_by_program <- function(method="rf", pred="bpmail", data=totalCDNoNEvo) {
 
 
 cat_pred_bench_all <- function(trials) {
-  programs <- list("bpmail", "netweaver")
+  programs <- list("bpmail", "netweaver","diebierse","geogoogle","hftbomberman","inspirento","jnfe","jniinchi","lagoon","lavalamp","schemaspy","xisemele")
   data.list <- list()
   for (i in 1:length(programs)) {
     data.list[[i]] <- Rmspredict::cat_pred_bench(trials = trials, pred = programs[[i]], data = totalCDCatEvo)
@@ -103,7 +103,7 @@ cat_pred_bench_all <- function(trials) {
 
 cat_pred_bench <- function(trials, pred, data) {
   print(pred)
-  methods <- list( "svmRadial", "parRF","C5.0", "rf")
+  methods <- list("gbm", "svmRadial", "parRF","C5.0", "rf")
   acc.output <- matrix(ncol = length(methods), nrow = trials)
   for (j in 1:length(methods)) {
     print(methods[[j]])
