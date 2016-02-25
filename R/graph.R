@@ -20,3 +20,30 @@ graph_npreds <- function(data) {
     scale_size_continuous(range = c(3, 9)) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }
+
+#' FUNCTION: Confusion matrix graph
+#'
+#' This function takes in a confusion matrix
+#' and creates a heatmap of the confusion matrix
+#' results.
+#'
+
+graph_cm <- function(cm) {
+
+  df <- as.data.frame(as.table(cm$table))
+  ggplot(data = df, aes(x=Prediction, y=Reference, fill=Freq)) +
+    geom_tile()
+
+}
+
+graph_cpred <- function(data) {
+  ggplot(data, aes(x = variable, y=value, fill=variable)) +
+    geom_boxplot() +
+    facet_wrap(~ Program) +
+    xlab("Program") +
+    ylab("Accuracy") +
+    ggtitle("Accuracy of Different Techniques") +
+    scale_fill_grey() +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position="none")
+}
