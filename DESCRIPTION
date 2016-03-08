@@ -9,7 +9,8 @@ Depends:
     R (>= 3.2.1),
     caret,
     ggplot2,
-    reshape2
+    reshape2,
+    doMC
 License: What license is it under?
 LazyData: TRUE
 RoxygenNote: 5.0.1
