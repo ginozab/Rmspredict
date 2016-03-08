@@ -13,7 +13,11 @@ cat_predict <- function(data, method, pred) {
   train$Class <- NULL
   print(summary(train))
   test <- data[(data$program==pred),]
-  test <- expandRows(test, 4)
+  test <- Rmspredict::cat_sample(test, "up", "range")
+  #test$MMLOC <- as.factor(test$MMLOC)
+  #test <- cat_sample(test, "up", "MMLOC")
+  #test$MMLOC <- as.numeric(test$MMLOC)
+  print(summary(test))
   test$program <- NULL
   train$program <- NULL
   testRanges <- dplyr::select(test, source, range)
@@ -25,6 +29,8 @@ cat_predict <- function(data, method, pred) {
   test$prediction <- predict(model, newdata = test)
   #print(predict)
   test <- dplyr::full_join(test, testRanges, by="source")
+  imp <- varImp(model, scale = FALSE)
+  print(imp)
   #test["prediction"] <- predict
   #test["range"] <- testResults$range
   #print(testEvo$range)
