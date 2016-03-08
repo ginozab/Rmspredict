@@ -7,13 +7,13 @@
 #'
 
 graph_npreds <- function(data) {
-  Numeric <- data.frame(test$source, test$MS, test$prediction)
-  Numeric$Difference <- (abs(test$MS - test$prediction))
-  Numeric <- melt(Numeric, id=c("test.source", "Difference"))
-  Numeric$variable <- factor(Numeric$variable, levels = c("test.MS", "test.prediction"), labels = c("Actual", "Predicted"))
+  Numeric <- dplyr::select(data, source, MS, prediction)
+  Numeric$Difference <- (abs(data$MS - data$prediction))
+  Numeric <- melt(Numeric, id=c("source", "Difference"))
+  Numeric$variable <- factor(Numeric$variable, levels = c("MS", "prediction"), labels = c("Actual", "Predicted"))
   colnames(Numeric)[colnames(Numeric)=="variable"] <- "Legend"
 
-  ggplot(data=Numeric, aes(test.source, value, color = Legend)) +
+  ggplot(data=Numeric, aes(data.source, value, color = Legend)) +
     geom_point(alpha=1, aes(size = Difference)) +
     labs(x="Program", y="Mutation Score") +
     ggtitle("Actual versus Predicted Mutation Scores") +
