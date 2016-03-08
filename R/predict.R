@@ -41,13 +41,7 @@ cpred_by_program <- function(method = "C5.0", pred="bpmail", data=totalCDCatEvo)
 #' @export
 
 npred_by_program <- function(method="rf", pred="bpmail", data=totalCDNoNEvo) {
-  data$X.1 <- NULL
-  data$X <- NULL
-  data$genMethod <- NULL
-  data$killed <- NULL
-  data$total <- NULL
-
-  print(colnames(data))
+  #print(colnames(data))
   trainEvo <- data[!(data$program==pred),]
   testEvo <- data[(data$program==pred),]
 
@@ -57,8 +51,8 @@ npred_by_program <- function(method="rf", pred="bpmail", data=totalCDNoNEvo) {
   testEvoResults <- setNames(testEvoResults, c("source", "MS"))
   testEvo$MS <- NULL
 
-  print(colnames(testEvo))
-  print(colnames(testEvoResults))
+  #print(colnames(testEvo))
+  #print(colnames(testEvoResults))
 
   inTrainingEvo <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
 
@@ -81,7 +75,8 @@ npred_by_program <- function(method="rf", pred="bpmail", data=totalCDNoNEvo) {
 
 
 cat_pred_bench_all <- function(trials) {
-  programs <- list("bpmail", "netweaver","diebierse","geogoogle","hftbomberman","inspirento","jnfe","jniinchi","lagoon","lavalamp","schemaspy","xisemele")
+  #programs <- list("bpmail", "netweaver","diebierse","geogoogle","hftbomberman","inspirento","jnfe","jniinchi","lagoon","lavalamp","schemaspy","xisemele")
+  programs <- list("bpmail", "netweaver")
   data.list <- list()
   for (i in 1:length(programs)) {
     data.list[[i]] <- Rmspredict::cat_pred_bench(trials = trials, pred = programs[[i]], data = totalCDCatEvo)
@@ -103,7 +98,9 @@ cat_pred_bench_all <- function(trials) {
 
 cat_pred_bench <- function(trials, pred, data) {
   print(pred)
-  methods <- list("gbm", "svmRadial", "parRF","C5.0", "rf")
+  #methods <- list("gbm", "svmRadial", "parRF","C5.0", "rf")
+  #methods <- list("svmRadial", "parRF", "majority")
+  methods <- list("majority", "random")
   acc.output <- matrix(ncol = length(methods), nrow = trials)
   for (j in 1:length(methods)) {
     print(methods[[j]])
@@ -123,16 +120,27 @@ cat_pred_bench <- function(trials, pred, data) {
 }
 
 cat_pred <- function(method, pred, data) {
-  trainEvo <- data[!(data$program==pred),]
-  testEvo <- data[(data$program==pred),]
+  if (method == "majority") {
+    return(cat_majority(data, pred))
+  }
 
-  testEvo$program <- NULL
-  trainEvo$program <- NULL
+  else if (method == "random") {
+    return(cat_rand(data,pred))
+  }
+  else {
+    trainEvo <- data[!(data$program==pred),]
+    testEvo <- data[(data$program==pred),]
+    #testEvo$program <- NULL
+    #trainEvo$program <- NULL
+    testEvoResults <- data.frame("program" = testEvo$program, "range" = testEvo$range)
+    testEvo$range <- NULL
 
-  inTraining <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
-  modelFC50 <- train(range~., data=trainEvo, trControl=inTraining, method=method)
-  predictMC50 <- predict(modelFC50, newdata = testEvo[,1:22])
-  #, preProcess=c("scale","center")
-  cmCat <- confusionMatrix(predictMC50, testEvo$range)
-  return(cmCat$overall["Accuracy"])
+    inTraining <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
+    modelFC50 <- train(range~., data=trainEvo, trControl=inTraining, method=method)
+    predictMC50 <- predict(modelFC50, newdata = testEvo)
+    testEvo["range"] <- testEvoResults$range
+    #print(testEvo$range)
+    cmCat <- confusionMatrix(predictMC50, testEvo$range)
+    return(cmCat$overall["Accuracy"])
+  }
 }
