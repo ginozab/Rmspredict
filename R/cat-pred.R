@@ -7,16 +7,21 @@
 #' desired machine learning algorithm
 
 cat_predict <- function(data, method, pred) {
-  train1 <- data[!(data$program==pred),]
-  print(summary(train1))
-  train <- Rmspredict::cat_sample(train1, "up", "range")
+  train <- data[!(data$program==pred),]
+  print(summary(train))
+  #train <- Rmspredict::cat_sample(train1, "up", "range")
+  train$TMLOC <- as.factor(train$TMLOC)
+  train <- cat_sample(train, "up", "TMLOC")
+  train$TMLOC <- as.numeric(train$TMLOC)
   train$Class <- NULL
   print(summary(train))
+
   test <- data[(data$program==pred),]
-  test <- Rmspredict::cat_sample(test, "up", "range")
-  #test$MMLOC <- as.factor(test$MMLOC)
-  #test <- cat_sample(test, "up", "MMLOC")
-  #test$MMLOC <- as.numeric(test$MMLOC)
+  #test <- Rmspredict::cat_sample(test, "up", "range")
+  test$TMLOC <- as.factor(test$TMLOC)
+  test <- cat_sample(test, "up", "TMLOC")
+  test$TMLOC <- as.numeric(test$TMLOC)
+
   print(summary(test))
   test$program <- NULL
   train$program <- NULL
