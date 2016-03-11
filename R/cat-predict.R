@@ -13,11 +13,10 @@ cat_prediction <- function(data, method, pred, kfolds = 10, repeats = 1) {
   testRanges <- dplyr::select(test, source, range)
   test$range <- NULL
 
-  inTraining <- trainControl(method = "repeatedcv", number = kfolds, repeats = repeats)
+  inTraining <- trainControl(method = "repeatedcv", number = kfolds, repeats = repeats, verbose = FALSE)
   model <- train(range~., data=train, trControl=inTraining, method=method)
   test$prediction <- predict(model, newdata = test)
   test <- dplyr::full_join(test, testRanges, by="source")
-  print(test$range)
   cmCat <- confusionMatrix(test$prediction, test$range)
   return(cmCat$overall["Accuracy"])
 }
