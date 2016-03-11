@@ -14,11 +14,11 @@
 # see the variable types
 
 benchmark <- function(trials, methods, programs,
-                      data = totalCDCatEvo, sampling = "regular", class = NULL) {
+                      data = totalCDCatEvo, sampling = "regular", class = NULL, kfolds = 10, repeats = 1) {
   data.list <- list()
   for (i in 1:length(programs)) {
-    data.list[[i]] <- Rmspredict::pred_bench(trials = trials, pred = programs[[i]], data = data,
-                                             methods = methods, sampling = sampling, class = class)
+    data.list[[i]] <- Rmspredict::pred_bench(trials = trials, pred = programs[[i]], data = data, kfolds=kfolds,
+                                             methods = methods, sampling = sampling, class = class, repeats=repeats)
   }
   df <- do.call("rbind", data.list)
   df$value <- as.numeric(df$value)
@@ -34,14 +34,14 @@ benchmark <- function(trials, methods, programs,
 #methods <- list("gbm", "svmRadial", "parRF","C5.0", "rf")
 #methods <- list("svmRadial", "parRF", "majority")
 
-pred_bench <- function(trials, pred, data, methods, sampling, class) {
+pred_bench <- function(trials, pred, data, methods, sampling, class, kfolds, repeats) {
   print(pred)
   acc.output <- matrix(ncol = length(methods), nrow = trials)
   for (j in 1:length(methods)) {
     print(methods[[j]])
     for (i in 1:trials) {
       acc.output[i,j] <- Rmspredict::pred_frame(method=methods[[j]], pred=pred, data=data,
-                                                sampling=sampling, class=class)
+                                                sampling=sampling, class=class, kfolds=kfolds, repeats=repeats)
       print(acc.output[i,j])
     }
   }
@@ -60,7 +60,7 @@ pred_bench <- function(trials, pred, data, methods, sampling, class) {
 #' This function provides a frame for all possible prediction
 #' configurations
 
-pred_frame <- function(method, pred, data, sampling, class) {
+pred_frame <- function(method, pred, data, sampling, class, kfolds, repeats) {
   if (method == "majority") {
     return(cat_majority(data, pred))
   }
@@ -68,6 +68,6 @@ pred_frame <- function(method, pred, data, sampling, class) {
     return(cat_rand(data,pred))
   }
   else {
-    return(cat_predict(data,method,pred))
+    return(cat_prediction(data,method,pred, kfolds, repeats))
   }
 }
