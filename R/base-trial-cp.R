@@ -1,6 +1,8 @@
 library("Rmspredict", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.2")
 library("devtools")
 
+devtools::load_all()
+
 registerDoMC(2)
 
 all.methods.minus.random <- list("majority", "avNNet", "svmRadial", "parRF", "rf", "C5.0", "gbm")
