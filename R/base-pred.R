@@ -24,7 +24,12 @@ cat_majority <- function(data, pred, col = "program", predict = "range") {
 cat_rand <- function(data, pred, progcol = "program", predcol = "range") {
   test <- data[(data[,progcol]==pred),]
   elems.occ <- levels(test[,predcol])
-  test$prediction <- sample(elems.occ,1, size = nrow(test))
+  predictions <- sample(elems.occ,1, size = nrow(test))
+  preds <- data.frame(predictions)
+  print(length(levels(preds)))
+  test <- cbind(test, preds)
+  print(length(levels(test$predictions)))
   cm <- confusionMatrix(test[,predcol], test$prediction)
+
   return(cm$overall["Accuracy"])
 }
