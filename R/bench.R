@@ -14,11 +14,11 @@
 # see the variable types
 
 benchmark <- function(trials, methods, programs,
-                      data = totalCDCatEvo, sampling = "regular", class = NULL, kfolds = 10, repeats = 1) {
+                      data, type, sampling = "regular", kfolds = 10, repeats = 1) {
   data.list <- list()
   for (i in 1:length(programs)) {
     data.list[[i]] <- Rmspredict::pred_bench(trials = trials, pred = programs[[i]], data = data, kfolds=kfolds,
-                                             methods = methods, sampling = sampling, class = class, repeats=repeats)
+                                             methods = methods, sampling = sampling, type = type, repeats=repeats)
   }
   df <- do.call("rbind", data.list)
   df$value <- as.numeric(df$value)
@@ -34,14 +34,14 @@ benchmark <- function(trials, methods, programs,
 #methods <- list("gbm", "svmRadial", "parRF","C5.0", "rf")
 #methods <- list("svmRadial", "parRF", "majority")
 
-pred_bench <- function(trials, pred, data, methods, sampling, class, kfolds, repeats) {
+pred_bench <- function(trials, pred, data, methods, sampling, type, kfolds, repeats) {
   print(pred)
   acc.output <- matrix(ncol = length(methods), nrow = trials)
   for (j in 1:length(methods)) {
     print(methods[[j]])
     for (i in 1:trials) {
       acc.output[i,j] <- Rmspredict::pred_frame(method=methods[[j]], pred=pred, data=data,
-                                                sampling=sampling, class=class, kfolds=kfolds, repeats=repeats)
+                                                sampling=sampling, type=type, kfolds=kfolds, repeats=repeats)
       print(acc.output[i,j])
     }
   }
@@ -60,14 +60,34 @@ pred_bench <- function(trials, pred, data, methods, sampling, class, kfolds, rep
 #' This function provides a frame for all possible prediction
 #' configurations
 
-pred_frame <- function(method, pred, data, sampling, class, kfolds, repeats) {
-  if (method == "majority") {
-    return(cat_majority(data, pred))
+pred_frame <- function(method, pred, data, sampling, type, kfolds, repeats) {
+  if (type == "classification") {
+    if (method == "majority") {
+      return(cat_majority(data, pred))
+    }
+    else if (method == "random") {
+      return(cat_rand(data,pred))
+    }
+    else {
+      return(cat_prediction(data,method,pred, kfolds, repeats))
+    }
   }
-  else if (method == "random") {
-    return(cat_rand(data,pred))
+  else if (type == "regression") {
+    if (method == "average") {
+      avg_preds <- reg_average_pred(data,pred)
+      rmse <- matrix(unlist(avg_preds["rmse"]), ncol = 1, byrow = TRUE)
+      mae <- matrix(unlist(avg_preds["mae"]), ncol = 1, byrow = TRUE)
+      return(rmse)
+    }
+    else {
+      num_preds <- num_predict(data,method,pred)
+      rmse <- matrix(unlist(num_preds["rmse"]), ncol = 1, byrow = TRUE)
+      mae <- matrix(unlist(num_preds["mae"]), ncol = 1, byrow = TRUE)
+      return(rmse)
+    }
   }
+
   else {
-    return(cat_prediction(data,method,pred, kfolds, repeats))
+    stop("type needs to be either 'classification' or 'regression'")
   }
 }
