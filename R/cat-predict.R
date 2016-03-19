@@ -13,8 +13,13 @@ cat_prediction <- function(data, method, pred, kfolds = 10, repeats = 1) {
   testRanges <- dplyr::select(test, source, range)
   test$range <- NULL
 
-  inTraining <- trainControl(method = "repeatedcv", number = kfolds, repeats = repeats, verbose = FALSE)
-  model <- train(range~., data=train, trControl=inTraining, method=method)
+  inTraining <- trainControl(method = "repeatedcv", number = kfolds, repeats = repeats)
+  if (method == "gbm" || method == "avNNEt") {
+    model <- train(range~., data=train, trControl=inTraining, method=method, verbose = FALSE)
+  }
+  else {
+    model <- train(range~., data=train, trControl=inTraining, method=method)
+  }
   test$prediction <- predict(model, newdata = test)
   test <- dplyr::full_join(test, testRanges, by="source")
   cmCat <- confusionMatrix(test$prediction, test$range)

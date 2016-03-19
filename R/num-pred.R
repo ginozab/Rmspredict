@@ -22,7 +22,12 @@ num_predict <- function(data, method, pred) {
   #print(colnames(testEvoResults))
 
   inTrainingEvo <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
-  model <- train(MS ~ ., data = train, method=method, trControl=inTrainingEvo)
+  if (method == "gbm" || method == "avNNet") {
+    model <- train(MS ~ ., data = train, method=method, trControl=inTrainingEvo, verbose = FALSE)
+  }
+  else {
+    model <- train(MS ~ ., data = train, method=method, trControl=inTrainingEvo)
+  }
   test$predictions <- predict(model, newdata = test)
 
   test <- dplyr::full_join(test, testResults, by="source")
