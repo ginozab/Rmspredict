@@ -26,5 +26,8 @@ num_predict <- function(data, method, pred) {
   test$predictions <- predict(model, newdata = test)
 
   test <- dplyr::full_join(test, testResults, by="source")
-  return(test)
+  rmse <- RMSE(test$predictions, test$MS)
+  mae <- mae(test$predictions, test$MS)
+  ret <- list("rmse" = rmse, "mae" = mae, "df" = test)
+  return(ret)
 }
