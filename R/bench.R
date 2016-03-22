@@ -81,6 +81,7 @@ pred_bench <- function(trials, pred, data, methods, sampling, type, kfolds, repe
   }
 
   output <- dplyr::full_join(acc.output, kap.output, by=c("Trial", "Program", "variable"))
+  colnames(output)[which(names(output) == "variable")] <- "Algorithm"
 
   return(output)
 }
