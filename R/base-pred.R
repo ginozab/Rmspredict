@@ -12,7 +12,11 @@ cat_majority <- function(data, pred, col = "program", predict = "range") {
   m <- tail(names(sort(table(train[,predict]))), 1)
   c <- length(which(test[,predict] == m))
   acc.major <- (c/nrow(test))
-  return(toString(acc.major))
+  test$predictions <- rep(m, nrow(test))
+  cm <- confusionMatrix(test$predictions, test$range)
+  ret <- list("acc" = cm$overall["Accuracy"], "kap" = cm$overall["Kappa"], "matrix" = cm, "data" = test)
+  #return(toString(acc.major))
+  return(ret)
 }
 
 #' FUNCTION: cat_rand
