@@ -5,7 +5,7 @@
 #' This function takes in data and
 #' predicts the desired value using
 #' the desired machine learning algorithm
-#'
+#' @export
 
 num_predict <- function(data, method, pred) {
   #print(colnames(data))

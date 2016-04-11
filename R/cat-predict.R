@@ -3,7 +3,7 @@
 #' FUNCTION: cat_prediction
 #'
 #' This function is supports basic categorical prediction
-#'
+#' @export
 
 cat_prediction <- function(data, method, pred, kfolds = 10, repeats = 1) {
   train <- data[!(data$program==pred),]
