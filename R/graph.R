@@ -32,6 +32,8 @@ graph_cm <- function(cm) {
 
   df <- as.data.frame(as.table(cm$table))
   ggplot(data = df, aes(x=Prediction, y=Reference, fill=Freq)) +
+    theme_bw() +
+    scale_fill_grey(start=.3, end=.6) +
     geom_tile()
 
 }
