@@ -103,6 +103,7 @@ data_prep <- function(data, pred, j, methods) {
 #'
 #' This function provides a frame for all possible prediction
 #' configurations
+#' @export
 
 pred_frame <- function(method, pred, data, sampling, type, kfolds, repeats, eval) {
   if (type == "classification") {
