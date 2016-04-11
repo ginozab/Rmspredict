@@ -5,3 +5,5 @@
 .Rhistory
 *.swp
 .nfs*
+*.csv
+test
