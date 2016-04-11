@@ -4,6 +4,7 @@
 .Rbuildignore
 .Rhistory
 *.swp
+*.swo
 .nfs*
 *.csv
 test
