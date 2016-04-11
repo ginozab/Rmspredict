@@ -4,8 +4,8 @@
 \alias{benchmark}
 \title{FUNCTION: benchmark}
 \usage{
-benchmark(trials, methods, programs, data = totalCDCatEvo,
-  sampling = "regular", class = NULL)
+benchmark(trials, methods, programs, data, type, sampling = "regular",
+  kfolds = 10, repeats = 1)
 }
 \description{
 This function runs multiple trials of experimentation

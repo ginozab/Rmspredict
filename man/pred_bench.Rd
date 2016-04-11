@@ -4,7 +4,7 @@
 \alias{pred_bench}
 \title{FUNCTION: pred_bench}
 \usage{
-pred_bench(trials, pred, data, methods, sampling, class)
+pred_bench(trials, pred, data, methods, sampling, type, kfolds, repeats)
 }
 \description{
 This function runs multiple trials of experimentation on a list of machine learning algorithm

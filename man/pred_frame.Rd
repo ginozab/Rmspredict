@@ -4,7 +4,7 @@
 \alias{pred_frame}
 \title{FUNCTION: pred_frame}
 \usage{
-pred_frame(method, pred, data, sampling, class)
+pred_frame(method, pred, data, sampling, type, kfolds, repeats, eval)
 }
 \description{
 This function provides a frame for all possible prediction
