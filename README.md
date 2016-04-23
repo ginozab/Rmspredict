@@ -35,7 +35,26 @@ This `benchmark` function makes use of the next two functions available in the p
 
 ### Visualization Functions
 
+
+
 ## Data Available for Use
+
+Below is a table of all the available data frames in the `mspredictr` package.
+
+| Data Frame     | Target Data Type | Description                             |
+|----------------|------------------|-----------------------------------------|
+| totalCDCatCP   | Categorical      | Three Category Codepro Mutation Scores  |
+| totalCDCatEvo  | Categorical      | Three Category Evosuite Mutation Scores |
+| totalCDCatMan  | Categorical      | Three Category Manual Mutation Scores   |
+| totalCDCatQCP  | Categorical      | Six Category Codepro Mutation Scores    |
+| totalCDCatQEvo | Categorical      | Six Category Evosuite Mutation Scores   |
+| totalCDCatQMan | Categorical      | Six Category Manual Mutation Scores     |
+| totalCDRegCP   | Numerical        | Numerical Codepro Mutation Scores       |
+| totalCDRegEvo  | Numerical        | Numerical Evosuite Mutation Scores      |
+| totalCDRegMan  | Numerical        | Numerical Manual Mutation Scores        |
+
 ## Usage Example
+
+Here is a link to an asciinema video example of how to use the `mspredictr` package for making predictions using data mining and supervised machine learning techniques. 
 
 [![asciicast](https://asciinema.org/a/41901.png)](https://asciinema.org/a/41901)
