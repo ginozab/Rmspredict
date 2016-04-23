@@ -17,8 +17,10 @@ There are three different categories of functions provided by the `mspredictr` p
 | Benchmarking  | benchmark        |
 | Benchmarking  | pred_bench       |
 | Benchmarking  | pred_frame       |
-| Visualization |                  |
-| Visualization |                  |
+| Visualization | graph_preds      |
+| Visualization | graph_overall    |
+| Visualization | graph_tree       |
+| Visualization | graph_distr      |
 
 ### Prediction Functions
 
@@ -35,7 +37,7 @@ This `benchmark` function makes use of the next two functions available in the p
 
 ### Visualization Functions
 
-
+There are four visualization functions available in the `mspredictr` package. The `graph_preds` and `graph_overall` functions take in the data frame returned from a successful run of the `benchmark` function. The `graph_tree` function makes a regression tree to visualize the how predictions are made. This function takes in the raw categorical and numerical dataset. The `graph_distr` visualizes a distribution of the target data column which the user wants to predict. 
 
 ## Data Available for Use
 
@@ -55,6 +57,6 @@ Below is a table of all the available data frames in the `mspredictr` package.
 
 ## Usage Example
 
-Here is a link to an asciinema video example of how to use the `mspredictr` package for making predictions using data mining and supervised machine learning techniques. 
+Here is a link to an asciinema video example of how to use the `mspredictr` package for making predictions using data mining and supervised machine learning techniques.
 
 [![asciicast](https://asciinema.org/a/41901.png)](https://asciinema.org/a/41901)
