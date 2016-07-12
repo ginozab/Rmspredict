@@ -19,8 +19,6 @@ There are three different categories of functions provided by the `mspredictr` p
 | Benchmarking  | pred_frame       |
 | Visualization | graph_preds      |
 | Visualization | graph_overall    |
-| Visualization | graph_tree       |
-| Visualization | graph_distr      |
 
 ### Prediction Functions
 
