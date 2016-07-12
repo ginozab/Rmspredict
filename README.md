@@ -35,7 +35,8 @@ This `benchmark` function makes use of the next two functions available in the p
 
 ### Visualization Functions
 
-There are four visualization functions available in the `mspredictr` package. The `graph_preds` and `graph_overall` functions take in the data frame returned from a successful run of the `benchmark` function. The `graph_tree` function makes a regression tree to visualize the how predictions are made. This function takes in the raw categorical and numerical dataset. The `graph_distr` visualizes a distribution of the target data column which the user wants to predict. 
+There are two visualization functions available in the `mspredictr` package. The `graph_preds` and `graph_overall` functions take in the data frame returned from a successful run of the `benchmark` function.  
+These two functions then create a box and whisker plot of he results. `graph_preds` makes a faceted box and whisker that is split based on the values in the program column. `graph_overall` creates a single box and whisker plot that visualizes the prediction results from all of the different programs. 
 
 ## Data Available for Use
 
