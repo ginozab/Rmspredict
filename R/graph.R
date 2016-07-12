@@ -38,6 +38,8 @@ graph_cm <- function(cm) {
 
 }
 
+
+
 graph_cpred <- function(data) {
   ggplot(data, aes(x = variable, y=value, fill=variable)) +
     geom_boxplot() +
@@ -49,3 +51,63 @@ graph_cpred <- function(data) {
     theme_bw() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position="none")
 }
+
+
+#' FUNCTION: graph_overall
+#'
+#' This graphing function creates a single box and whisker plot to visualize the
+#' results from running the benchmark function in mspredictr
+#' @export
+
+
+graph_overall <- function(data, ytitle, title, x_string = "Algorithm", y_string = "value") {
+  data$Trial <- NULL
+  data$X <- NULL
+  data$Categories <- NULL
+  data$genMethod <- NULL
+  data.melt <- melt(data, id=c("Program", "Algorithm"))
+
+  ggplot(data = data.melt, aes_string(x = x_string, y = y_string)) +
+    geom_boxplot(aes(fill = variable)) +
+    xlab("Algorithm") +
+    ylab(ytitle) +
+    ggtitle(title) +
+    theme_bw() +
+    scale_fill_grey(start = .5, end = .8) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          axis.text = element_text(size = 16),
+          axis.title = element_text(size = 18),
+          legend.text = element_text(size = 16),
+          legend.title = element_text(size = 18),
+          plot.title = element_text(size = 18))
+
+}
+
+
+#' FUNCTION: graph_preds
+#'
+#' This function creates a faceted box and whisker plot, based on the program, from the results returned by the
+#' benchmark function in mspredictr
+#' @export
+
+graph_preds <- function(data, ytitle, title, x_string = "Algorithm", y_string = "value") {
+
+  data$Trial <- NULL
+  data$X <- NULL
+  data$Categories <- NULL
+  data$genMethod <- NULL
+  data.melt <- melt(data, id=c("Program", "Algorithm"))
+
+  ggplot(data = data.melt, aes_string(x = x_string, y = y_string)) +
+    geom_boxplot(aes(fill = variable)) +
+    facet_wrap( ~ Program) +
+    xlab("Algorithm") +
+    ylab(ytitle) +
+    ggtitle(title) +
+    theme_bw() +
+    scale_fill_grey(start = .5, end = .8) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+}
+
+
