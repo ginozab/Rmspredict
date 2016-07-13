@@ -4,7 +4,7 @@
 #'
 #' This function takes in data and the desired program to predict mutation
 #' scores for and returns the accuracy when predicting majority occurrence
-#'
+#' @export
 
 cat_majority <- function(data, pred, col = "program", predict = "range") {
   train <- data[!(data[,col]==pred),]

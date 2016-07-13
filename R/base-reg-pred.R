@@ -4,7 +4,7 @@
 #' FUNCTION: reg_average_pred
 #'
 #' This function predicts the average mutation score
-#'
+#' @export
 
 reg_average_pred <- function(data, pred) {
   train <- data[!(data[,"program"]==pred),]
