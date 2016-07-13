@@ -5,14 +5,6 @@
 #' different machine learning algorithms
 #' @export
 
-#programs <- list("bpmail", "netweaver","diebierse","geogoogle","hftbomberman","inspirento","jnfe","jniinchi","lagoon","lavalamp","schemaspy","xisemele")
-#programs <- list("bpmail", "netweaver")
-
-#Rmspredict::graph_cpred(df)
-# df$value was a char so as.numeric turns it into a double
-# found this out using the df %>% dplyr::glimpse() function to
-# see the variable types
-
 benchmark <- function(trials, methods, programs,
                       data, type, sampling = "regular", kfolds = 10, repeats = 1) {
   data.list <- list()
@@ -38,15 +30,10 @@ benchmark <- function(trials, methods, programs,
 #' using the same data
 #' @export
 
-#methods <- list("gbm", "svmRadial", "parRF","C5.0", "rf")
-#methods <- list("svmRadial", "parRF", "majority")
-
 pred_bench <- function(trials, pred, data, methods, sampling, type, kfolds, repeats) {
-  #print(pred)
   acc.output <- matrix(ncol = length(methods), nrow = trials)
   kap.output <- matrix(ncol = length(methods), nrow = trials)
   for (j in 1:length(methods)) {
-    #print(methods[[j]])
     for (i in 1:trials) {
       acc.output[i,j] <- Rmspredict::pred_frame(method=methods[[j]], pred=pred, data=data,
                                                 sampling=sampling, type=type, kfolds=kfolds, repeats=repeats, eval = 1)
@@ -118,17 +105,7 @@ pred_frame <- function(method, pred, data, sampling, type, kfolds, repeats, eval
       }
 
     }
-    #else if (method == "random") {
-    #  retlist <- cat_rand(data, pred)
 
-    #  if (eval == 1) {
-    #    return(matrix(unlist(retlist["acc"]), ncol = 1, byrow = TRUE))
-    #  }
-    #  else {
-    #    return(matrix(unlist(retlist["kap"]), ncol = 1, byrow = TRUE))
-    #  }
-
-    #}
     else {
       retlist <- cat_prediction(data,method,pred, kfolds, repeats)
 

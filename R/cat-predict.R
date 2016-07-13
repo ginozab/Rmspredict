@@ -23,7 +23,6 @@ cat_prediction <- function(data, method, pred, kfolds = 10, repeats = 1) {
   test$prediction <- predict(model, newdata = test)
   test <- dplyr::full_join(test, testRanges, by="source")
   cmCat <- confusionMatrix(test$prediction, test$range)
-  #ret <-cmCat
   ret <- list("acc" = cmCat$overall["Accuracy"], "kap" = cmCat$overall["Kappa"],"cm" = cmCat, "df" = test)
   return(ret)
 }

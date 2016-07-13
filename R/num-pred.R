@@ -8,7 +8,6 @@
 #' @export
 
 num_predict <- function(data, method, pred) {
-  #print(colnames(data))
   train <- data[!(data$program==pred),]
   test <- data[(data$program==pred),]
 
@@ -17,9 +16,6 @@ num_predict <- function(data, method, pred) {
   testResults <- data.frame(test$source, test$MS)
   testResults <- setNames(testResults, c("source", "MS"))
   test$MS <- NULL
-
-  #print(colnames(testEvo))
-  #print(colnames(testEvoResults))
 
   inTrainingEvo <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
   if (method == "gbm" || method == "avNNet") {
